@@ -24,7 +24,33 @@ def sums_of_str_elements_are_equal(func):
 
 
 def format_output(*required_keys):
-    pass
+    keys = required_keys
+
+    def dict_decorator(func):
+        def in_func(*args, **kwargs):
+            in_values = func(*args, **kwargs)
+            out_dict = dict()
+            try:
+                for key in keys:
+                    if '__' in key:
+                        list = key.split('__')
+                        value = ''
+                        for element in list:
+                            value += in_values[element] + ' '
+                        value = value[:-1]
+                    else:
+                        value = in_values[key]
+                    if value == '':
+                        value = 'Empty value'
+                    out_dict.update({key: value})
+                return out_dict
+            except:
+                raise ValueError
+        return in_func
+    return dict_decorator    
+
+
+
 
 
 def add_method_to_instance(klass):
