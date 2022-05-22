@@ -29,7 +29,7 @@ def format_output(*required_keys):
 
 def add_method_to_instance(klass):
     def out_dec(func):
-        def in_dec(*args):
+        def in_dec(*args, **kwargs):
             return func()
         setattr(klass, func.__name__, in_dec)
         return in_dec
